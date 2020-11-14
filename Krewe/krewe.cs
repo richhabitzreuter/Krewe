@@ -16,9 +16,7 @@ namespace Krewe
             {
                 var processes = Process.GetProcessesByName(appList[i]);
                 for (int y = 0; y < processes.Length; y++)
-                {
                     processes[y].PriorityClass = reset ? ProcessPriorityClass.Normal : ProcessPriorityClass.Idle;
-                }
             }
             lowPriority = !reset;
         }
@@ -47,7 +45,7 @@ namespace Krewe
             { 
                 processName = args[0];
                 sleepDelay = int.Parse(args[1]) * 1000;
-                keepRunning = args[2] == "true" ? true : false;
+                keepRunning = args[2] == "true";
             }
             catch { }
 
@@ -63,15 +61,12 @@ namespace Krewe
                     else
                     {
                         if (lowPriority)
-                        {
                             SetLowPriority(true);
-                        }
                     }
                 }
                 else if (keepRunning && !lowPriority)
-                {
                     SetLowPriority();
-                }
+                
                 GC.Collect();
                 Thread.Sleep(sleepDelay);
             }
